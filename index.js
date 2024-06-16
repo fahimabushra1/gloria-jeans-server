@@ -1,17 +1,18 @@
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const app = express()
-const port = process.env.PORT || 5000
+const app = express();
+const port = process.env.PORT || 5000;
 
-// bushraarifeen
-// Z0cBeP14ChjoPX8u
+
 
 app.use(cors())
 app.use(express.json())
 
 
-const uri = "mongodb+srv://bushraarifeen:Z0cBeP14ChjoPX8u@cluster0.gcmb5gz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = `mongodb+srv://${process.env.S3_BUCKET}:${process.env.SECRET_KEY}@cluster0.gcmb5gz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+
 
 
 const client = new MongoClient(uri, {
@@ -41,14 +42,14 @@ async function run() {
     })
     app.get('/coffees/:id', async (req,res)=>{
       const id = req.params.id;
-      const coffeesData = coffeesCollection.findOne({_id:new ObjectId(id)});
+      const coffeesData =  await coffeesCollection.findOne({_id:new ObjectId(id)});
       res.send(coffeesData);
     })
     app.patch('/coffees/:id', async (req,res)=>{
       const id = req.params.id;
       const updatedData = req.body;
-      const result = coffeesCollection.updateOne({_id:new ObjectId(id)},
-      {set: updatedData}
+      const result = await coffeesCollection.updateOne({_id:new ObjectId(id)},
+      {$set: updatedData}
     );
       res.send(result);
     })
