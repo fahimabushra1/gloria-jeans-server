@@ -32,8 +32,6 @@ req.user = verify.email;
 }
 
 
-
-
 const uri = `mongodb+srv://${process.env.S3_BUCKET}:${process.env.SECRET_KEY}@cluster0.gcmb5gz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 
