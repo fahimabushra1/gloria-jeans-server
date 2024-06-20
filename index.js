@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 
 
 
@@ -32,7 +32,7 @@ req.user = verify.email;
 }
 
 
-const uri = `mongodb+srv://${process.env.S3_BUCKET}:${process.env.SECRET_KEY}@cluster0.gcmb5gz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = process.env.DATABASE_URL;
 
 
 const client = new MongoClient(uri, {
